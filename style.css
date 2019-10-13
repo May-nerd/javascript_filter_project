@@ -1,0 +1,42 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+tr:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:nth-child(2){
+  background-color: lightblue;
+}
+
+
+input[type=checkbox] {
+  display: none;
+}
+
+label :checked + span {
+  background: darkgreen;
+  color: white;
+}
+
+label span {
+  display: block;
+  background: lightgrey;
+  margin: 0.5em;
+  padding: 0.25em;
+  border-radius: 25%;
+  margin-left: 20%;
+  margin-right: 20%;
+
+  text-align: center;
+}

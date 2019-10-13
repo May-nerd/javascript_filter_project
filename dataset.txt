@@ -1,0 +1,64 @@
+
+
+TEXTitle, NUMYear, NUMRuntime, CATGenre, NUMIMDB Rating, TEXDirector
+
+The Godfather,1972,175,Crime,9.2,Francis Ford Coppola
+Schindler's List,1993,195,Biography,8.9,Steven Spielberg
+12 Angry Men,1957,96,Drama,8.9,Sidney Lumet
+Life is Beautiful,1997,116,Comedy,8.6,Roberto Benigni
+The Good The Bad and the Ugly,1966,148,Western,8.8,Sergio Leone
+The Shawshank Redemption,1994,142,Drama,9.3,Frank Darabont
+The Pursuit of Happyness,2006,117,Biography,8,Gabrielle Muccino
+Seven Samurai,1954,207,Adventure,8.6,Akira Kurosawa
+Untouchable,2011,112,Biography,8.5,Oliver Nakache
+Central Station,1998,113,Drama,7.9,Walter Salles
+Requiem for a Dream,2000,102,Drama,8.3,Darren Aronofsky
+A Beautiful Mind,2001,135,Biography,8.2,Ron Howard
+Hachi A Dog's Tale,2009,93,Drama,8.1,Lasse Hallstrom
+Taken,2008,94,Action,7.8,Pierre Morrel
+My Sassy Girl,2001,123,Comedy,8,Jae-young Kwak
+Amores Perros,2000,154,Drama,8.1,Alejandro Inarritu
+The Shining,1980,146,Horror,8.4,Stanley Kubrick
+Apocalypto,2006,139,Action,7.8,Mel Gibson
+Gladiator,2000,155,Action,8.5,Ridley Scott
+Cast Away,2000,143,Adventure,7.8,Robert Zemeckis
+The Dark Knight,2008,152,Action,9,Christopher Nolan
+The Pianist,2002,150,Biography,8.5,Roman Polanski
+Titanic,1997,194,Drama,7.8,James Cameron
+3-Iron,2004,88,Crime,8,Ki-duk Kim
+Braveheart,1995,178,Biography,8.3,Mel Gibson
+It's a Wonderful Life,1946,130,Drama,8.6,Frank Capra
+Spring Summer Autumn Winter and Spring,2003,103,Drama,8,Ki-duk Kim
+Alien,1979,117,Horror,8.4,Ridley Scott
+Memories of Murder,2003,131,Action,8.1,Joon-ho Bong
+The Return,2003,110,Drama,8,Andrew Zvygintsev
+I Saw the Devil,2010,142,Action,7.8,Jee-woon Kim
+Children of Heaven,1997,89,Drama,8.3,Majid Majidi
+A Separation,2011,123,Drama,8.3,Asghar Farhadi
+The Sixth Sense,1999,107,Drama,8.1,M Night Shymalan
+A Moment to Remember,2004,117,Drama,8.2,John Lee
+Departures,2008,130,Drama,8.1,Yojiro Takita
+The Road Home,1999,89,Drama,7.8,Yimou Zhang
+Saving Private Ryan,1998,169,Drama,8.6,Steven Speilberg
+The Bridge on the River Kwai,1957,161,Adventure,8.1,David Lean
+Ben-Hur,1959,212,Adventure,8.1,William Wyler
+The Exorcist,1973,122,Horror,8,William Fredkin
+The Secret in their Eyes,2009,129,Drama,8.2,Juan Jose Campanella
+Leon,1994,110,Action,8.5,Luc Besson
+The Green Mile,1999,189,Crime,8.6,Frank Darabont
+Gran Torino,2008,116,Drama,8.1,Clint Eastwood
+Kill Bill Volume 1,2003,111,Action,8.1,Quentin Tarantino
+Jurassic Park,1993,127,Action,8.1,Steven Spielberg
+Terminator 2 Judgement Day,1991,137,Action,8.5,James Cameron
+Back to the Future,1985,116,Adventure,8.5,Robert Zemeckis
+Finding Nemo,2003,100,Animation,8.1,Andrew Stanton
+
+
+
+
+
+
+
+
+
+
