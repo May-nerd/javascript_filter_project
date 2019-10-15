@@ -3,11 +3,14 @@
 var URL = 'http://127.0.0.1:5500/MOCK_DATA.csv'
 
 var FilterFunc = null
+var ResetFunc = null
+
 
 fetch(URL) 
 .then((resp) => resp.text()) 
 .then(function(data) {
     FilterFunc = Filter
+    ResetFunc = Reset
     var oldData = JSON.parse(localStorage.getItem('rawText'))
     var tableData = null
     if ( data == oldData) {
@@ -15,6 +18,10 @@ fetch(URL)
         displayTable(tableData)
         Filter();
     } else {
+        Reset()
+    }
+
+    function Reset() {
         tableData = convertData(data)
         displayTable(tableData)
         saveRawText(data)
@@ -122,7 +129,6 @@ fetch(URL)
 
     }
 
-    filterBtn = document.getElementById('filter')
 })
 // .catch(function(e) {
 //     alert("Please change the URL of the file in script.js.")
@@ -268,7 +274,8 @@ function insertControlsRow(tableData, table){
         var cell = row.insertCell();
         if (types[j] == 'CAT'){
             var filterObject = tableData['filters'][j]
-            createCategoricalControls(cell, columnNames[j], filterObject)
+            var values = tableData[columnNames[j]]
+            createCategoricalControls(cell, columnNames[j], filterObject, values)
         } else if (types[j] == 'NUM'){
             createNumericalControls(cell, columnNames[j], filters[j])
         } else if (types[j] == 'TEX'){
@@ -278,18 +285,34 @@ function insertControlsRow(tableData, table){
 }
 
 
-function createCategoricalControls(cell, columnName, filterObject){
+function createCategoricalControls(cell, columnName, filterObject, values){
     var uniqueList = filterObject['categories']
     var checked = filterObject['checked']
     for (let i = 0; i < uniqueList.length; i++) {
         const label = uniqueList[i];
+
+        var count = countValues(label, values)
+
+        
         var labelElement = document.createElement("label")
-        addCheckBox(labelElement, label, columnName+"_CAT", checked[i])
+        addCheckBox(labelElement, label, columnName+"_CAT", checked[i], count)
         cell.appendChild(labelElement)
     }   
 }
 
-function addCheckBox(cell, label, id, isChecked){
+function countValues(keyword, values){
+    var count = 0
+    for (let i = 0; i < values.length; i++) {
+        const value = values[i];
+        if(value == keyword) {
+            count++
+        }
+    }
+    return count
+}
+
+
+function addCheckBox(cell, label, id, isChecked, count){
     var input = document.createElement("input");
     input.type = "checkbox";
     input.classList = [id];
@@ -297,7 +320,7 @@ function addCheckBox(cell, label, id, isChecked){
     input.checked = isChecked
 
     var span = document.createElement("span");
-    span.innerHTML = label
+    span.innerHTML = label+" ("+count+")"
 
     cell.appendChild(input)
     cell.appendChild(span)

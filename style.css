@@ -52,4 +52,16 @@ label span {
   right: 30px;
 }
 
+#reset {
+  background-color: red;
+  color: white;
+  height: 70px;
+  width: 70px;
+  border-radius: 100%;
+  position: fixed;
+  bottom: 30px;
+  right: 110px;
+}
+
+
 
