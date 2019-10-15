@@ -12,6 +12,8 @@ fetch(URL)
     FilterFunc = Filter
     ResetFunc = Reset
     var oldData = JSON.parse(localStorage.getItem('rawText'))
+    var savedFilters = JSON.parse(localStorage.getItem('filters'))
+
     var tableData = null
     if ( data == oldData) {
         tableData = JSON.parse(localStorage.getItem('tableData'))
@@ -29,15 +31,18 @@ fetch(URL)
     }
 
     function Filter() {
+        // Create table data clone
         var cloneTableData = JSON.parse(JSON.stringify(tableData));
         console.log(cloneTableData)
         var columnNames = cloneTableData['columnNames']
 
+        // Filter for each column
         for (let i = 0; i < columnNames.length; i++) {
             const columnName = columnNames[i]
             const type = cloneTableData['types'][i];
             const values = cloneTableData[columnName];
             
+            // For Numerical
             if (type == 'NUM') {
                 var min = document.getElementById(columnName+'_MIN').value
                 var max = document.getElementById(columnName+'_MAX').value
@@ -56,11 +61,15 @@ fetch(URL)
                     max = +max
                 }
 
+                if (min > max) {
+                    alert("Minimum is greater than maximum!")
+                }
+
                 for (let j = values.length-1; j >= 0; j--) {
                     const value = values[j];
+
+                    // Deleting rows
                     if (value < min || value > max) {
-                        
-                        // Putting null on deleted rows
                         for (let k = 0; k < columnNames.length; k++) {
                             const colName = columnNames[k];
                             cloneTableData[colName].splice(j,1)
@@ -69,16 +78,18 @@ fetch(URL)
                     }
                 }
 
-            } else if (type == "TEX") {
+            } 
+            // For text columns
+            else if (type == "TEX") {
                 var search = document.getElementById(columnName+'_TEX').value
                 
                 
                 cloneTableData["filters"][i]["keyword"] = search
                 for (let j = values.length-1; j >= 0; j--) {
                     var value = values[j];
+
+                    // Deleting rows
                     if (!value.toUpperCase().includes(search.toUpperCase())) {
-                    
-                        // Putting null on deleted rows
                         for (let k = 0; k < columnNames.length; k++) {
                             const colName = columnNames[k];
                             cloneTableData[colName].splice(j,1)
@@ -88,6 +99,7 @@ fetch(URL)
                 }
                 
             } 
+            // For categorical columns
             else if (type == "CAT") {
                 var checkBoxes = document.getElementsByClassName(columnName+"_CAT")
                 var checked = cloneTableData["filters"][i]["checked"] 
@@ -109,9 +121,9 @@ fetch(URL)
 
                 for (let j = values.length-1; j >= 0; j--) {
                     var value = values[j];
+
+                    // Deleting rows
                     if (!checkedCategories.includes(value)) {
-                    
-                        // Putting null on deleted rows
                         for (let k = 0; k < columnNames.length; k++) {
                             const colName = columnNames[k];
                             cloneTableData[colName].splice(j,1)
@@ -121,12 +133,11 @@ fetch(URL)
                 }
             }
         }
+        // Saving the filters
         tableData['filters'] =  cloneTableData['filters']
         // Display table
         displayTable(cloneTableData)
         saveTableData(tableData)
-
-
     }
 
 })
@@ -139,9 +150,7 @@ function convertData(rawText) {
     rows = rawText.trim().split("\n")
     
     // Fist row is header
-    var headerNames = rows[0].trim().split(",")
-    var columnNames = headerNames.map(getColumnName)
-    var types = headerNames.map(getType)
+    var columnNames = rows[0].trim().split(",")
 
 
     // Initializing the object for table data
@@ -162,11 +171,6 @@ function convertData(rawText) {
                 var columnName = columnNames[j];
 
                 var value = values[j]
-
-                // Converting string to number
-                if (types[j] == 'NUM') {
-                    value = +value
-                }
                 tableData[columnName].push(value)
             }
             numRows += 1
@@ -175,11 +179,32 @@ function convertData(rawText) {
         }
     }
 
+    var types = []
+    for (let i = 0; i < columnNames.length; i++) {
+        const columnName = columnNames[i];
+        var values = tableData[columnName]
+        
+        if (!isNaN(+values[0])) {
+            tableData[columnName].map(stringToNum)
+            types.push("NUM")
+        } else if (tableData[columnName].filter(onlyUnique).length <= 5) {
+            types.push("CAT")
+        } else {
+            types.push("TEX")
+        }
+
+    }
+
+
+
+
+
     // Saving for the order
     tableData['columnNames'] = columnNames
     tableData['totalNumberRows'] = numRows
     tableData['types'] = types
     
+    // Adding filters
     tableData["filters"] = []
     for (let i = 0; i < columnNames.length; i++) {
         const columnName = columnNames[i];
@@ -205,21 +230,33 @@ function convertData(rawText) {
         tableData["filters"].push(filterObject)
     }
 
+
+    
+
     return tableData
 }
 
 
-function getType(column){
-    return column.slice(0,3)
+function stringToNum(value){
+    return +value
 }
 
-function getColumnName(column){
-    return column.slice(3)
-}
 
 
 function saveTableData(tableData){
     localStorage.setItem('tableData', JSON.stringify(tableData))
+}
+
+function saveFilterActions(filterObject){
+    var filters =  JSON.parse(localStorage.getItem('filters'))
+
+    if (filters == null) {
+        filters = []
+    }
+
+    filters.push(filterObject)
+
+    localStorage.setItem('filters', JSON.stringify(filters))
 }
 
 function saveRawText(rawText){
@@ -368,11 +405,3 @@ function removeElement(elementId) {
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
 }
-
-
-
-// TODO []: Persist text
-//  Show table
-// TODO []: Persist num
-// TODO: Remove origTable
-// 
